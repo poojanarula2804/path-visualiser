@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="src/style/css/main.css" />
+
+    <title>PathFinder Visualizer</title>
+
+</head>
+
+  <body>
+    <div class="modal fade" id="introModal" tabindex="-1" role="dialog" data-show="true">
+      <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Introduction</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+    
+          <!-- Modal body -->
+          <div class="modal-body">
+            PathFinder visualizer is an interactive frontend web application that finds the path between 2 points- the start and the end point.
+            The 2-D place act as a graph wherein each square (a node) on the grid can be either a start block, end block, wall block or simply a block through which travelling is possible. </p>
+            <p>PathFinder Visualizer not only finds the path but also calculates the shortes one between 2 nodes via different algorithms.
+            The web application makes us visualise the process of finding the path through chosen algorithm and also calculates the time taken to do so.
+            It also calculates the number of blocks that make the shortes path. </p>
+           <p> PathFinder Visualizer is also a game wherein one can create random grids and find path through algorithms. </p>
+            <h4> Dive right in...</h4>
+            
+          </div>
+    
+          
+              </div>
+              <div class="carousel-item">
+                 <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Algorithms</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+    
+          <!-- Modal body -->
+          <div class="modal-body">
+           <p> The application currently gives 5 algorithm options to choose from. A quick information about each-</p>
+           <ul>
+             <li> 
+               <h6> Depth First Search </h6>
+               <p>Depth-first search is a graph traversal algorithm that starts at the start node and explores as far as possible along each branch before backtracking.</p>
+                <p>So the basic idea is to start from the start node and mark the node and move to the adjacent unmarked node and continue this loop until there is no unmarked adjacent node. 
+                  Then backtrack and check for other unmarked nodes and traverse them. The traversal stops as soon as the end node is encountered.
+                  Finally print the nodes in the path. </p>
+                  <p>DFS does not necessarily yield shortest paths in graphs unless you follow the edge directly connecting the start and destination nodes.</p>
+                  <p>Time Complexity: O(V+E)  , Space Compexity: O(V)</p>
+            </li>
+             <li> 
+               <h6> Breath First Search </h6>
+               <p>Breadth first search is a graph traversal algorithm that starts traversing the graph from root node and explores all the neighbouring nodes. Then, it selects the nearest node and explore all the unexplored nodes. The algorithm follows the same process for each of the nearest node until it finds the goal.</p>
+               <p>BFS calculates the shortest paths in unweighted graphs only or when weights of each edge is same.</p>
+               <p>Time Complexity: O(V+E)  , Space Compexity: O(V)</p>
+            </li>
+             <li> 
+               <h6> Bi-Directional Breath First Search </h6>
+                <p> Bidirectional search is a graph search algorithm which find smallest path form source to goal vertex. It runs two simultaneous search – 
+                  Forward search form source/initial vertex toward goal vertex and Backward search form goal/target vertex toward source vertex</p>
+                <p>  The search terminates when two graphs intersect.</p>
+                <p>Bidirectional search is fast and requires less memory but implementation is difficult. </p>
+                <p> Time and Space Complexity: O(b^d)  where b is branching factor and d is distance between start and end block</p>
+              </li>
+             <li> 
+               <h6> Dijkstra's algorithm </h6>
+                <p> It is a greedy algorithm that solves the single-source shortest path problem for both undirected and directed graph.
+                  The algorithm uses a greedy approach in the sense that we find the next best solution hoping that the end result is the best solution for the whole problem.
+                </p>
+                <p>In Djikstra, we overestimate the distance of each vertex from the starting vertex. Then we visit each node and its neighbors to find the shortest subpath to those neighbors.
+                  </p>
+                  <p>Time Complexity: O(E*log(V))  , Space Compexity: O(V)</p>
+              </li>
+             <!-- <li> <h6> A* algorithm </h6></li> -->
+           </ul>
+          </div>
+    
+          
+              </div>
+              <!-- <div class="carousel-item">
+                Modal Header 
+          <div class="modal-header">
+            <h4 class="modal-title">Functionality</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+    
+          Modal body 
+          <div class="modal-body">
+            Modal body..
+          </div>
+    
+      
+              </div> -->
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+         <!-- Modal footer -->
+         <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+    
+        </div>
+      </div>
+    </div>
+
+
+    <section id="home">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-0 sticky-top">
+        <a class="navbar-brand d-flex text-white" data-toggle="modal" data-target="#myModal">
+          <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+            Open modal
+          </button> -->
+          PathFinder Visualizer &nbsp;
+          <div class="d-none action-panel d-lg-none ">
+            <button class="btn btn-success btn-sm start-stop-btn">
+              Visualize
+            </button>
+            <button class="btn btn-light btn-sm next-step">
+              <i class="fa fa-step-forward"></i>
+              Next Step
+            </button>
+          </div>
+        </a>
+        <button
+          class="navbar-toggler p-0"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbar"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbar">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="fill-block"
+                role="button"
+                data-toggle="dropdown"
+                title="Create Wall Blocks"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <i class="fa fa-th-large"></i> Create Blocks
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item disabled" onclick="RandomGrid()"
+                  >Random Grid</a
+                >
+                <!-- <div class="dropdown-divider"></div>
+                <h6 class="dropdown-header">Upcoming Updates</h6> -->
+                <!-- <a class="dropdown-item disabled" href="#"
+                  >DFS Maze Generation</a
+                > -->
+                <!-- <a class="dropdown-item disabled" href="#"
+                  >Recursive backtracker</a
+                > -->
+                <!-- <a class="dropdown-item disabled" href="#"
+                  >Randomized Prim's algorithm</a
+                >
+                <a class="dropdown-item disabled" href="#"
+                  >Randomized Kruskal's algorithm</a
+                >
+                <a class="dropdown-item disabled" href="#"
+                  >Recursive Division</a
+                > -->
+
+                <!-- <a class="dropdown-item" onclick="fillBlock('fill2')">Fill 2</a> -->
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="algo-choice"
+                role="button"
+                data-toggle="dropdown"
+                title="Change Algorithm"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <i class="fa fa-filter"></i> Algorithm
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a class="dropdown-item algo-selection" data-algo="dfs"
+                    >Depth First Search (DFS)
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item algo-selection" data-algo="bfs"
+                    >Breadth First Search (BFS)</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item algo-selection" data-algo="bdsBFS"
+                    >Bi-Directional Search (BFS)</a
+                  >
+                </li>
+                <!-- <li>
+                  <a class="dropdown-item algo-selection" data-algo="bdsDFS"
+                    >Bi-Directional Search (DFS)</a
+                  >
+                </li> -->
+                <li>
+                  <a class="dropdown-item algo-selection" data-algo="dijkstra"
+                    >Dijkstra's Algorithm </a
+                  >
+                </li>
+                <!-- <li>
+                  <a class="dropdown-item algo-selection" data-algo="astar"
+                  data-h="euclidean"
+                    >A* Algorithm
+                   </a> -->
+                  <!-- <ul class="dropdown-menu">
+                    <li>
+                      <a
+                        class="dropdown-item algo-selection"
+                        data-algo="astar"
+                        data-h="manhattan"
+                      >
+                        A* (using Manhattan Heuristic)
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item algo-selection"
+                        data-algo="astar"
+                        data-h="euclidean"
+                      >
+                        A* (using Euclidean Heuristic)
+                      </a>
+                    </li>
+                    <li class="dropdown-submenu">
+                      <a class="dropdown-item dropdown-toggle"
+                        >A* (using Diagonal Heuristic)</a -->
+                      <!-- > -->
+                      <!-- <ul class="dropdown-menu">
+                        <li>
+                          <a
+                            class="dropdown-item algo-selection"
+                            data-algo="astar"
+                            data-h="diagonal"
+                            data-d="1"
+                          >
+                            with Chebyshev distance (D = 1, D2 = 1)
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            class="dropdown-item algo-selection"
+                            data-algo="astar"
+                            data-h="diagonal"
+                            data-d="2"
+                          >
+                            with Octile distance (D = 1, D2 = sqrt(2))
+                          </a>
+                        </li>
+                      </ul> -->
+                    <!-- </li> -->
+                  </ul>
+                </li>
+
+                <!-- <a class="dropdown-item algo-selection" data-algo="unknown"
+                  >Unknown Algorithm</a
+                > -->
+                <!-- <div class="dropdown-divider"></div> -->
+                <!-- <h6 class="dropdown-header">Upcoming Updates</h6>
+                <a class="dropdown-item disabled" href="#" data-algo="dfsMaze"
+                  >Best First Search</a
+                > -->
+              <!-- </ul> -->
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                id="algo-choice"
+                role="button"
+                data-toggle="dropdown"
+                title="Change Speed"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <i class="fa fa-tachometer"></i> Speed
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item speed-selection" data-speed="Fast">
+                  Fast
+                </a>
+                <!-- <a class="dropdown-item speed-selection" data-speed="Medium">
+                  Medium
+                </a>
+                <a class="dropdown-item speed-selection" data-speed="Slow">
+                  Slow
+                </a>
+                <a class="dropdown-item speed-selection" data-speed="Step">
+                  Step Mode
+                </a> -->
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                role="button"
+                data-toggle="dropdown"
+              >
+                <i class="fa fa-cog"></i> Settings
+              </a>
+              <div class="dropdown-menu">
+                <!-- rows input -->
+                <div class="p-2 d-none d-md-block">
+                  <div class="input-group input-group-sm">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-sm"
+                        >Rows</span
+                      >
+                    </div>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="row-count"
+                      min="0"
+                    />
+                  </div>
+                </div>
+                <!-- column input -->
+                <div class="p-2 d-none d-md-block">
+                  <div class="input-group input-group-sm">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-sm"
+                        >Columns</span
+                      >
+                    </div>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="column-count"
+                      min="0"
+                    />
+                  </div>
+                </div>
+                <!-- boxsize input -->
+                <div class="p-2">
+                  <div class="input-group input-group-sm">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-sm"
+                        >Box Size</span
+                      >
+                    </div>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="box-size"
+                      value="0"
+                      placeholder="0 = auto"
+                      min="10"
+                    />
+                  </div>
+                </div>
+                <!-- ε-admissible input -->
+                <!-- <div class="p-2">
+                  <div
+                    class="input-group input-group-sm"
+                    data-toggle="tooltip"
+                    data-title="Used for weighted heuristic function hw = ε*ha(n)"
+                  >
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="">ε admissible</span>
+                    </div>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="admissible-value"
+                      value="5"
+                      min="1"
+                    />
+                  </div>
+                </div> -->
+              </div>
+            </li>
+            <li class="nav-item d-lg-none">
+              <a class="nav-link" onclick="openFullscreen()">
+                <i class="fa fa-expand"></i> Toggle Full Screen</a
+              >
+            </li>
+            <li class="nav-item d-none mt-md-0 py-1 action-panel mx-auto">
+              <div class="d-none d-md-block">
+                <button class="btn btn-success btn-sm px-5 start-stop-btn">
+                  Visualize
+                </button>
+                <button class="btn btn-white btn-sm next-step">
+                  <i class="fa fa-step-forward"></i>
+                  Next Step
+                </button>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <section class="container-fluid">
+        <section id="toolbar">
+          <div class="d-flex row justify-content-center px-2">
+            <div class="pb-0 p-2">
+              <div
+                class="btn-group btn-group-sm btn-group-toggle"
+                role="group"
+                aria-label="tool mode"
+                data-toggle="buttons"
+              >
+                <label
+                  class="btn btn-outline-secondary active"
+                  data-toggle="tooltip"
+                  title="Wall blocks will remove the node connection with its neighbours"
+                >
+                  <input
+                    type="radio"
+                    name="selectionMode"
+                    value="WALL_NODES"
+                    autocomplete="off"
+                    checked
+                  />
+                  <i class="fa fa-square"></i>
+                  Wall Block
+                </label>
+                <label
+                  class="btn btn-outline-primary"
+                  data-toggle="tooltip"
+                  title="Start Node/Block for the path"
+                >
+                  <input
+                    type="radio"
+                    name="selectionMode"
+                    value="START_NODE"
+                    autocomplete="off"
+                  />
+                  Start Block
+                </label>
+                <label
+                  class="btn btn-outline-danger"
+                  data-toggle="tooltip"
+                  title="Target Node/Block for the path"
+                >
+                  <input
+                    type="radio"
+                    name="selectionMode"
+                    value="TARGET_NODE"
+                    autocomplete="off"
+                  />
+                  Target Block
+                </label>
+              </div>
+            </div>
+            <!-- algorithm name display and clear graph btn -->
+            <div
+              class="pb-0 p-2 d-flex justify-content-center align-items-center"
+            >
+              <small class="mx-auto">
+                <b data-toggle="tooltip" title="Selected Algorithm">Algo: </b>
+                <span
+                  id="selected-algo-name"
+                  data-toggle="tooltip"
+                  data-title="Dijkstra's Algorithm"
+                  >...</span
+                >&nbsp;
+                <!-- <b data-toggle="tooltip" title="Traversing Speed">Speed: </b>
+                <span id="selected-speed-name">Fast</span>&nbsp; -->
+                <b
+                  data-toggle="tooltip"
+                  title="Time to find the path in ms (Note: inclusive of frame delays)"
+                  >Time:
+                </b>
+                <span id="runner-duration">...</span>&nbsp;
+              </small>
+
+              <button class="btn btn-sm btn-secondary" id="reset-graph-btn">
+                Reset Graph
+              </button>
+              &nbsp;
+              <button class="btn btn-sm btn-secondary" id="clear-graph-btn">
+                Clear Graph
+              </button>
+            </div>
+          </div>
+        </section>
+        <section class="graph d-flex justify-content-center row" id="grid">
+          <canvas id="graph-canvas" resize></canvas>
+        </section>
+      </section>
+    </section>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.2/paper-full.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="src/scripts/utilities.js"></script>
+    <script src="src/scripts/runners.js"></script>
+    <script src="src/scripts/block_generators.js"></script>
+    <script src="src/scripts/states.js"></script>
+    <script src="src/scripts/graph.js"></script>
+    <script src="src/scripts/grid.js"></script>
+    <script src="src/scripts/app.js"></script>
+  </body>
+</html>
