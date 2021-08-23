@@ -1,1 +1,1 @@
-# path-visualiser
+# PathFinder Visualiser
